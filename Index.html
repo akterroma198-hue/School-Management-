@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্কুল ম্যানেজমেন্ট সিস্টেম</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Scanner Library -->
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-900 text-white flex flex-col hidden md:flex">
+            <div class="p-5 text-2xl font-bold border-b border-indigo-800 flex items-center gap-3">
+                <i class="fas fa-graduation-cap"></i> স্কুল অ্যাপ
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="#" onclick="showSection('dashboard')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-home mr-2"></i> ড্যাশবোর্ড</a>
+                <a href="#" onclick="showSection('students')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-user-graduate mr-2"></i> শিক্ষার্থীদের তথ্য</a>
+                <a href="#" onclick="showSection('attendance')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-qrcode mr-2"></i> QR কোড হাজিরা</a>
+                <a href="#" onclick="showSection('routine')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-calendar-alt mr-2"></i> ক্লাস রুটিন</a>
+                <a href="#" onclick="showSection('results')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-file-alt mr-2"></i> পরীক্ষার ফলাফল</a>
+                <a href="#" onclick="showSection('fees')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-wallet mr-2"></i> ফি ব্যবস্থাপনা</a>
+                <a href="#" onclick="showSection('notices')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-bullhorn mr-2"></i> স্কুলের নোটিশ</a>
+                <a href="#" onclick="showSection('chat')" class="block py-2.5 px-4 rounded hover:bg-indigo-800 transition"><i class="fas fa-comments mr-2"></i> শিক্ষক-অভিভাবক চ্যাট</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Top Header -->
+            <header class="bg-white shadow p-4 flex justify-between items-center">
+                <h1 id="page-title" class="text-xl font-bold text-gray-800">ড্যাশবোর্ড</h1>
+                <div class="flex items-center gap-3">
+                    <span class="text-gray-600 font-medium">অ্যাডমিন প্যানেল</span>
+                    <img class="w-10 h-10 rounded-full border" src="https://via.placeholder.com/150" alt="User">
+                </div>
+            </header>
+
+            <!-- Dynamic Sections -->
+            <div class="p-6">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="section-content space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-blue-500">
+                            <p class="text-gray-500">মোট শিক্ষার্থী</p>
+                            <h3 class="text-2xl font-bold">৫২০ জন</h3>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-green-500">
+                            <p class="text-gray-500">মোট শিক্ষক</p>
+                            <h3 class="text-2xl font-bold">২৫ জন</h3>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-yellow-500">
+                            <p class="text-gray-500">আজকের হাজিরা</p>
+                            <h3 class="text-2xl font-bold">৪৮০ জন</h3>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-purple-500">
+                            <p class="text-gray-500">মাসিক কালেকশন</p>
+                            <h3 class="text-2xl font-bold">১,৫০,০০০ টাকা</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Students Section -->
+                <section id="students" class="section-content hidden bg-white p-6 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold">শিক্ষার্থীদের তালিকা</h2>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"><i class="fas fa-plus"></i> নতুন শিক্ষার্থী যোগ করুন</button>
+                    </div>
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="p-3 border">রোল</th>
+                                <th class="p-3 border">নাম</th>
+                                <th class="p-3 border">শ্রেণি</th>
+                                <th class="p-3 border">অভিভাবক</th>
+                                <th class="p-3 border">অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-3 border">০১</td>
+                                <td class="p-3 border">রাহিম আহমেদ</td>
+                                <td class="p-3 border">দশম</td>
+                                <td class="p-3 border">আব্দুল করিম</td>
+                                <td class="p-3 border"><button class="text-blue-600 hover:underline">ডিটেইলস</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Attendance Section (QR Code) -->
+                <section id="attendance" class="section-content hidden bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-bold mb-4">QR কোড দিয়ে হাজিরা গ্রহণ</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-gray-600 mb-2">ক্যামেরা অন করে ছাত্র-ছাত্রীদের আইডি কার্ডের QR কোড স্ক্যান করুন:</p>
+                            <video id="preview" class="w-full h-64 bg-black rounded-lg border"></video>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-700 mb-2">সাম্প্রতিক হাজিরা লগ:</h3>
+                            <ul id="attendance-log" class="bg-gray-50 p-4 rounded-lg border h-64 overflow-y-auto space-y-2">
+                                <li class="text-green-600 font-medium">✔ রাহিম আহমেদ (রোল: ০১) - উপস্থিত (সকাল ৯:০০ টা)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Routine Section -->
+                <section id="routine" class="section-content hidden bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-bold mb-4">ক্লাস রুটিন</h2>
+                    <p class="text-gray-600">এখানে প্রতিটি শ্রেণির রুটিন দেখতে ও আপডেট করতে পারবেন।</p>
+                </section>
+
+                <!-- Results Section -->
+                <section id="results" class="section-content hidden bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-bold mb-4">পরীক্ষার ফলাফল ব্যবস্থাপনা</h2>
+                    <p class="text-gray-600">শিক্ষার্থীদের মার্কশিট তৈরি ও প্রকাশের প্যানেল।</p>
+                </section>
+
+                <!-- Fees Section -->
+                <section id="fees" class="section-content hidden bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-bold mb-4">বেতন ও ফি ব্যবস্থাপনা</h2>
+                    <p class="text-gray-600">টিউশন ফি ও অন্যান্য খরচের হিসাব।</p>
+                </section>
+
+                <!-- Notices Section -->
+                <section id="notices" class="section-content hidden bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-bold mb-4">স্কুলের নোটিশ বোর্ড</h2>
+                    <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mb-4">
+                        <h4 class="font-bold text-blue-900">আগামীকাল স্কুল বন্ধ ঘোষণা</h4>
+                        <p class="text-sm text-blue-700">বিশেষ কারণে আগামীকালের ক্লাস স্থগিত থাকবে।</p>
+                    </div>
+                </section>
+
+                <!-- Chat Section -->
+                <section id="chat" class="section-content hidden bg-white p-6 rounded-lg shadow flex flex-col h-[70vh]">
+                    <h2 class="text-lg font-bold mb-4 border-b pb-2">শিক্ষক-অভিভাবক লাইভ চ্যাট</h2>
+                    <div class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-start gap-2">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs">শিক্ষক</span>
+                            <p class="bg-white p-3 rounded-lg shadow text-sm">আসসালামু আলাইকুম, রাহিমের পড়াশোনা কেমন চলছে?</p>
+                        </div>
+                        <div class="flex items-start gap-2 justify-end">
+                            <p class="bg-indigo-100 p-3 rounded-lg shadow text-sm">ওয়ালাইকুমুস সালাম স্যার, আলহামদুলিল্লাহ ভালো।</p>
+                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs">অভিভাবক</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-2">
+                        <input type="text" placeholder="আপনার বার্তা লিখুন..." class="flex-1 border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button class="bg-indigo-900 text-white px-5 py-2 rounded-lg hover:bg-indigo-800"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Script -->
+    <script src="script.js"></script>
+</body>
+</html>
